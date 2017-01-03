@@ -19,12 +19,13 @@ boids=(positions[0], positions[1], velocities[0],velocities[1])
 
 
 
-def update_boids(boids):
+def update_boids(boids, positions, velocities):
     xs,ys,xvs,yvs=boids
     # Fly towards the middle
     for i in range(Birds):
         for j in range(Birds):
             xvs[i]=xvs[i]+(xs[j]-xs[i])*0.01/len(xs)
+
     for i in range(Birds):
         for j in range(Birds):
             yvs[i]=yvs[i]+(ys[j]-ys[i])*0.01/len(xs)
@@ -41,10 +42,7 @@ def update_boids(boids):
                 xvs[i]=xvs[i]+(xvs[j]-xvs[i])*0.125/len(xs)
                 yvs[i]=yvs[i]+(yvs[j]-yvs[i])*0.125/len(xs)
     # Move according to velocities
-    for i in range(Birds):
-        xs[i]=xs[i]+xvs[i]
-        ys[i]=ys[i]+yvs[i]
-
+    positions += velocities
 
 
 figure=plt.figure()
@@ -52,7 +50,7 @@ axes=plt.axes(xlim=(-500,1500), ylim=(-500,1500))
 scatter=axes.scatter(boids[0],boids[1])
 
 def animate(frame):
-    update_boids(boids)
+    update_boids(boids, positions, velocities)
     scatter.set_offsets(zip(boids[0],boids[1]))
 
 anim = animation.FuncAnimation(figure, animate, frames=50, interval=50)

@@ -27,9 +27,6 @@ def update_boids(boids, positions, velocities):
     direction_to_middle = positions - middle_of_flock[:, np.newaxis]
     velocities -= direction_to_middle*strength_of_atraction
 
-    for i in range(Birds):
-        for j in range(Birds):
-            yvs[i]=yvs[i]+(ys[j]-ys[i])*0.01/len(xs)
     # Fly away from nearby boids
     for i in range(Birds):
         for j in range(Birds):

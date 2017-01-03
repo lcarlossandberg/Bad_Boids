@@ -39,12 +39,15 @@ def update_boids(boids, positions, velocities):
     velocities += np.sum(separations_if_close,1)
 
     # Try to match speed with nearby boids
-    for i in range(Birds):
-        for j in range(Birds):
-            if (xs[j]-xs[i])**2 + (ys[j]-ys[i])**2 < 10000:
-                xvs[i]=xvs[i]+(xvs[j]-xvs[i])*0.125/len(xs)
-                yvs[i]=yvs[i]+(yvs[j]-yvs[i])*0.125/len(xs)
-
+    velocity_separation = velocities[:,np.newaxis,:] - velocities[:,:,np.newaxis]
+    formation_flying_distance = 10000
+    formation_flying_strength = 0.125
+    very_far=square_distances > formation_flying_distance
+    velocity_separation_if_close = np.copy(velocity_separation)
+    velocity_separation_if_close[0,:,:][very_far] =0
+    velocity_separation_if_close[1,:,:][very_far] =0
+    velocities -= np.mean(velocity_separation_if_close, 1) * formation_flying_strength
+    
     # Move according to velocities
     positions += velocities
 

@@ -28,17 +28,23 @@ def update_boids(boids, positions, velocities):
     velocities -= direction_to_middle*strength_of_atraction
 
     # Fly away from nearby boids
-    for i in range(Birds):
-        for j in range(Birds):
-            if (xs[j]-xs[i])**2 + (ys[j]-ys[i])**2 < 100:
-                xvs[i]=xvs[i]+(xs[i]-xs[j])
-                yvs[i]=yvs[i]+(ys[i]-ys[j])
+    separations = positions[:,np.newaxis,:] - positions[:,:,np.newaxis]
+    squared_displacements = separations * separations
+    square_distances = np.sum(squared_displacements, 0)
+    alert_distance = 100
+    far_away = square_distances > alert_distance
+    separations_if_close = np.copy(separations)
+    separations_if_close[0,:,:][far_away] =0
+    separations_if_close[1,:,:][far_away] =0
+    velocities += np.sum(separations_if_close,1)
+
     # Try to match speed with nearby boids
     for i in range(Birds):
         for j in range(Birds):
             if (xs[j]-xs[i])**2 + (ys[j]-ys[i])**2 < 10000:
                 xvs[i]=xvs[i]+(xvs[j]-xvs[i])*0.125/len(xs)
                 yvs[i]=yvs[i]+(yvs[j]-yvs[i])*0.125/len(xs)
+
     # Move according to velocities
     positions += velocities
 

@@ -15,12 +15,9 @@ def new_flock(count, lower_limits, upper_limits):
 positions = new_flock(Birds, np.array([-450, 300.0]), np.array([50.0, 600.0]))
 velocities = new_flock(Birds,np.array([0, -20.0]), np.array([10.0, 20.0]))
 
-boids=(positions[0], positions[1], velocities[0],velocities[1])
 
+def update_boids(positions, velocities):
 
-
-def update_boids(boids, positions, velocities):
-    xs,ys,xvs,yvs=boids
     # Fly towards the middle
     strength_of_atraction = 0.01
     middle_of_flock = np.mean(positions, 1)
@@ -54,11 +51,11 @@ def update_boids(boids, positions, velocities):
 
 figure=plt.figure()
 axes=plt.axes(xlim=(-500,1500), ylim=(-500,1500))
-scatter=axes.scatter(boids[0],boids[1])
+scatter=axes.scatter(positions[0],positions[1])
 
 def animate(frame):
-    update_boids(boids, positions, velocities)
-    scatter.set_offsets(zip(boids[0],boids[1]))
+    update_boids(positions, velocities)
+    scatter.set_offsets(zip(positions[0],positions[1]))
 
 anim = animation.FuncAnimation(figure, animate, frames=50, interval=50)
 

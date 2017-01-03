@@ -22,9 +22,10 @@ boids=(positions[0], positions[1], velocities[0],velocities[1])
 def update_boids(boids, positions, velocities):
     xs,ys,xvs,yvs=boids
     # Fly towards the middle
-    for i in range(Birds):
-        for j in range(Birds):
-            xvs[i]=xvs[i]+(xs[j]-xs[i])*0.01/len(xs)
+    strength_of_atraction = 0.01
+    middle_of_flock = np.mean(positions, 1)
+    direction_to_middle = positions - middle_of_flock[:, np.newaxis]
+    velocities -= direction_to_middle*strength_of_atraction
 
     for i in range(Birds):
         for j in range(Birds):

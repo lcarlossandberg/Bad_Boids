@@ -1,14 +1,22 @@
 from matplotlib import pyplot as plt
 from matplotlib import animation
 import random
+import numpy as np
 
 Birds = 50 #number of birds in the simulation
 
-boids_x=[random.uniform(-450,50.0) for x in range(Birds)]
-boids_y=[random.uniform(300.0,600.0) for x in range(Birds)]
-boid_x_velocities=[random.uniform(0,10.0) for x in range(Birds)]
-boid_y_velocities=[random.uniform(-20.0,20.0) for x in range(Birds)]
-boids=(boids_x,boids_y,boid_x_velocities,boid_y_velocities)
+
+def new_flock(count, lower_limits, upper_limits):
+    #returns two colums of random numbers between the limits
+    #for ll=[a,b] & ul=[c,d], colum1 is between a-c and 2 is b-d
+    width=upper_limits-lower_limits
+    return (lower_limits[:,np.newaxis] + np.random.rand(2, count)*width[:,np.newaxis])
+
+positions = new_flock(Birds, np.array([-450, 300.0]), np.array([50.0, 600.0]))
+velocities = new_flock(Birds,np.array([0, -20.0]), np.array([10.0, 20.0]))
+
+boids=(positions[0], positions[1], velocities[0],velocities[1])
+
 
 
 def update_boids(boids):

@@ -20,44 +20,45 @@ class UpdateBoids(object):
         self.positions = positions
         self.velocities = velocities
 
-    
+    def update_boids(self):
         # Fly towards the middle
         strength_of_atraction = 0.01
-        middle_of_flock = np.mean(positions, 1)
-        direction_to_middle = positions - middle_of_flock[:, np.newaxis]
-        velocities -= direction_to_middle*strength_of_atraction
+        middle_of_flock = np.mean(self.positions, 1)
+        direction_to_middle = self.positions - middle_of_flock[:, np.newaxis]
+        self.velocities -= direction_to_middle*strength_of_atraction
 
         # Fly away from nearby boids
-        separations = positions[:,np.newaxis,:] - positions[:,:,np.newaxis]
+        separations = self.positions[:,np.newaxis,:] - self.positions[:,:,np.newaxis]
         squared_displacements = separations * separations
         square_distances = np.sum(squared_displacements, 0)
         alert_distance = 100
         far_away = square_distances > alert_distance
         separations_if_close = np.copy(separations)
-        separations_if_close[0,:,:][far_away] =0
-        separations_if_close[1,:,:][far_away] =0
-        velocities += np.sum(separations_if_close,1)
+        separations_if_close[0,:,:][far_away] = 0
+        separations_if_close[1,:,:][far_away] = 0
+        self.velocities += np.sum(separations_if_close,1)
 
         # Try to match speed with nearby boids
-        velocity_separation = velocities[:,np.newaxis,:] - velocities[:,:,np.newaxis]
+        velocity_separation = self.velocities[:,np.newaxis,:] - self.velocities[:,:,np.newaxis]
         formation_flying_distance = 10000
         formation_flying_strength = 0.125
         very_far=square_distances > formation_flying_distance
         velocity_separation_if_close = np.copy(velocity_separation)
         velocity_separation_if_close[0,:,:][very_far] =0
         velocity_separation_if_close[1,:,:][very_far] =0
-        velocities -= np.mean(velocity_separation_if_close, 1) * formation_flying_strength
+        self.velocities -= np.mean(velocity_separation_if_close, 1) * formation_flying_strength
     
         # Move according to velocities
-        positions += velocities
+        self.positions += self.velocities
 
 
 figure=plt.figure()
 axes=plt.axes(xlim=(-500,1500), ylim=(-500,1500))
 scatter=axes.scatter(positions[0],positions[1])
 
+
 def animate(frame):
-    UpdateBoids(positions, velocities)
+    UpdateBoids(positions, velocities).update_boids()
     scatter.set_offsets(zip(positions[0],positions[1]))
 
 anim = animation.FuncAnimation(figure, animate, frames=50, interval=50)

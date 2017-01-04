@@ -65,13 +65,21 @@ class UpdateBoids(object):
 
 
 
-boids = NewBoids(50).return_boids()
-positions = boids[0]
-velocities = boids[1]
+class Animate_Boids(object):
+    def __init__(self, positions, velocities):
+        self.positions = positions
+        self.velocities = velocities
 
-figure=plt.figure()
-axes=plt.axes(xlim=(-500,1500), ylim=(-500,1500))
-scatter=axes.scatter(positions[0],positions[1])
+    def animate(self, frame, scatter):
+        update_boids(self.positions, self.velocities)
+        scatter.set_offsets(zip(self.positions[0], self.positions[1]))
+
+    def display(self):
+        figure=plt.figure()
+        axes=plt.axes(xlim=(-500,1500), ylim=(-500,1500))
+        scatter=axes.scatter(self.positions[0], self.positions[1])
+        anim = animation.FuncAnimation(figure, self.animate, fargs=[scatter], frames=50, interval=50)
+        plt.show()
 
 
 def update_boids(positions, velocities):
@@ -81,14 +89,17 @@ def update_boids(positions, velocities):
     up_date.match_speed()
     up_date.move_velocities()
 
-def animate(frame):
-    update_boids(positions, velocities)
-    scatter.set_offsets(zip(positions[0],positions[1]))
 
-anim = animation.FuncAnimation(figure, animate, frames=50, interval=50)
+def parser():
+    boids = NewBoids(50).return_boids()
+    positions = boids[0]
+    velocities = boids[1]
+
+    Animate_Boids(positions, velocities).display()
+
 
 if __name__ == "__main__":
-    plt.show()
+    parser()
 
 
 

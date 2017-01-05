@@ -1,7 +1,6 @@
-from nose.tools import assert_almost_equal, assert_equal, assert_less, assert_greater
+from nose.tools import assert_equal
 import numpy as np
 from matplotlib import pyplot as plt
-from matplotlib import animation
 from animateboids import AnimateBoids
 
 """

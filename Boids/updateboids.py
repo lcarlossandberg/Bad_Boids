@@ -24,6 +24,7 @@ class UpdateBoids(object):
         separations_if_close[1,:,:][far_away] = 0
         self.velocities += np.sum(separations_if_close,1)
 
+
     def match_speed(self):
         # Try to match speed with nearby boids
         velocity_separation = self.velocities[:,np.newaxis,:] - self.velocities[:,:,np.newaxis]
@@ -39,7 +40,13 @@ class UpdateBoids(object):
         velocity_separation_if_close[0,:,:][very_far] =0
         velocity_separation_if_close[1,:,:][very_far] =0
         self.velocities -= np.mean(velocity_separation_if_close, 1) * formation_flying_strength
-    
+
+
     def move_velocities(self):
         # Move according to velocities
         self.positions += self.velocities
+
+
+    def function_for_testing(self):
+        #this function is used in testing to check the returns of the memeber functions
+        return (self.positions, self.velocities)

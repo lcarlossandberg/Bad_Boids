@@ -3,12 +3,17 @@ from matplotlib import animation
 from updateboids import UpdateBoids
 
 class AnimateBoids(object):
-    def __init__(self, positions, velocities):
+    def __init__(self, positions, velocities, strength_of_atraction=0.01, alert_distance=100, formation_flying_distance=10000, formation_flying_strength=0.125):
         self.positions = positions
         self.velocities = velocities
+    
+        self.strength_of_atraction = strength_of_atraction
+        self.alert_distance = alert_distance
+        self.formation_flying_distance = formation_flying_distance
+        self.formation_flying_strength = formation_flying_strength
 
     def update_boids(self, positions, velocities):
-        up_date = UpdateBoids(positions, velocities)
+        up_date = UpdateBoids(positions, velocities, self.strength_of_atraction, self.alert_distance, self.formation_flying_distance, self.formation_flying_strength)
         up_date.to_middle()
         up_date.away_from()
         up_date.match_speed()

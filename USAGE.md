@@ -1,5 +1,5 @@
 Once the package is installed it can be called using command:<br /> 
-boids<br />
+Boids<br />
 This will run the default settings of:<br /> 
 count: 50<br /> 
 attraction: 0.01<br /> 
@@ -19,8 +19,8 @@ It can also be called with arguments:<br />
 --name "file name" : takes a string which is the file name if you want to save, if this is not provided it will save as a file called 'boids_1.mp4'<br /> 
 
 Example calls of this are:<br />
-boids --count 10 --attraction 0.1 --alert 10 --save True --name boids.mp4<br /> 
-boids --argfile data.yml<br />
+Boids --count 10 --attraction 0.1 --alert 10 --save True --name boids.mp4<br /> 
+Boids --argfile data.yml<br />
 
 An example yml file can be found inside the fixtures file in testing along with the code used to generate it.
 

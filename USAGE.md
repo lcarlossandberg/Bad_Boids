@@ -20,5 +20,7 @@ It can also be called with arguments:<br />
 
 Example calls of this are:<br />
 boids --count 10 --attraction 0.1 --alert 10 --save True --name boids.mp4<br /> 
-boids --argfile data.yml 
+boids --argfile data.yml<br />
+
+An example yml file can be found inside the fixtures file in testing along with the code used to generate it.
 

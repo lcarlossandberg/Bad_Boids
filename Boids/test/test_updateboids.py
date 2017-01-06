@@ -1,7 +1,7 @@
 from nose.tools import assert_equal
 import numpy as np
 from matplotlib import pyplot as plt
-from updateboids import UpdateBoids
+from ..updateboids import UpdateBoids
 
 """
 class UpdateBoids(object):
@@ -127,16 +127,6 @@ def test_move_velocities():
     np.array_equal(velocities, velocities_move_velocities)
 
 test_move_velocities()
-
-
-
-
-
-
-
-
-
-
 
 
 

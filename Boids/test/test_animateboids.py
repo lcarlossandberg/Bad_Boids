@@ -1,7 +1,7 @@
 from nose.tools import assert_equal
 import numpy as np
 from matplotlib import pyplot as plt
-from animateboids import AnimateBoids
+from ..animateboids import AnimateBoids
 
 """
 class AnimateBoids(object):

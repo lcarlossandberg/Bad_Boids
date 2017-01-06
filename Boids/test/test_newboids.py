@@ -1,6 +1,6 @@
 from nose.tools import assert_almost_equal, assert_equal, assert_less, assert_greater
 import numpy as np
-from newboids import NewBoids
+from ..newboids import NewBoids
 
 """
 class NewBoids(object):

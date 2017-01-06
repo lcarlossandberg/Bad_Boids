@@ -20,6 +20,7 @@ class AnimateBoids(object):
         up_date.match_speed()
         up_date.move_velocities()
 
+
     def animate(self, frame, scatter):
         self.update_boids(self.positions, self.velocities)
         scatter.set_offsets(zip(self.positions[0], self.positions[1]))
